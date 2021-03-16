@@ -1,9 +1,9 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = var.aws_region
 }
 
 resource "aws_appsync_graphql_api" "this" {
-  name                = "appsync"
+  name                = "${lookup(var.project_name, var.env)}-appsync"
   schema              = file("schema.graphql")
   authentication_type = "OPENID_CONNECT"
 
@@ -24,7 +24,7 @@ resource "aws_appsync_datasource" "dynamodb" {
 }
 
 resource "aws_dynamodb_table" "cars" {
-  name           = "cars"
+  name           = "${lookup(var.project_name, var.env)}-appsync_cars"
   hash_key       = "id"
   read_capacity  = 1
   write_capacity = 1
@@ -36,7 +36,7 @@ resource "aws_dynamodb_table" "cars" {
 }
 
 resource "aws_iam_role" "dynamodb" {
-  name               = "dynamodb"
+  name               = "${lookup(var.project_name, var.env)}-appsync-dynamodb"
   assume_role_policy = data.aws_iam_policy_document.dynamodb_assume_role.json
 }
 
@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "dynamodb_assume_role" {
 }
 
 resource "aws_iam_role_policy" "dynamodb" {
-  name = "dynamodb"
+  name = "${lookup(var.project_name, var.env)}-appsync_dynamodb"
   role = aws_iam_role.dynamodb.id
 
   policy = data.aws_iam_policy_document.dynamodb.json
@@ -76,7 +76,7 @@ resource "aws_appsync_resolver" "mutation_createcar" {
   data_source = aws_appsync_datasource.dynamodb.name
 
   request_template  = file("vtl-templates/Mutation.createCar.request.vtl")
-  response_template = file("vtl-templates/Mutation.createCar.response.vtl")
+  response_template = "$util.toJson($context.result)"
 }
 
 resource "aws_appsync_resolver" "query_listcars" {
@@ -86,7 +86,7 @@ resource "aws_appsync_resolver" "query_listcars" {
   data_source = aws_appsync_datasource.dynamodb.name
 
   request_template  = file("vtl-templates/Query.listCars.request.vtl")
-  response_template = file("vtl-templates/Query.listCars.response.vtl")
+  response_template = "$util.toJson($context.result)"
 }
 
 resource "aws_appsync_resolver" "query_getcar" {
@@ -96,5 +96,5 @@ resource "aws_appsync_resolver" "query_getcar" {
   data_source = aws_appsync_datasource.dynamodb.name
 
   request_template  = file("vtl-templates/Query.getCar.request.vtl")
-  response_template = file("vtl-templates/Query.getCar.response.vtl")
+  response_template = "$util.toJson($context.result)"
 }
