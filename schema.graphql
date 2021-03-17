@@ -18,14 +18,10 @@ input CreateCarInput {
   username: String
 }
 
-input DeleteCarInput {
-  id: ID!
-}
-
 type Mutation {
   createCar(input: CreateCarInput!): Car
   updateCar(input: UpdateCarInput!): Car
-  deleteCar(input: DeleteCarInput!): Car
+  deleteCar(id: ID!): Car
 }
 
 type Query {
