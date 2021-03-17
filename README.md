@@ -3,13 +3,11 @@
 ## dev
 
 ```bash
-  terraform workspace select dev
-  terraform apply
+  make dev
 ```
 
 ## live
 
 ```bash
-  terraform workspace select live
-  terraform apply -var 'env=live'
+  make live
 ```
