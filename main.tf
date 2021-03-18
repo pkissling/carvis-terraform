@@ -90,6 +90,16 @@ resource "aws_appsync_resolver" "query_listcars" {
   response_template = "$util.toJson($context.result)"
 }
 
+resource "aws_appsync_resolver" "mutation_createcar" {
+  api_id      = aws_appsync_graphql_api.this.id
+  field       = "createCar"
+  type        = "Mutation"
+  data_source = aws_appsync_datasource.dynamodb.name
+
+  request_template  = file("vtl-templates/Mutation.createCar.request.vtl")
+  response_template = "$util.toJson($context.result)"
+}
+
 resource "aws_appsync_resolver" "mutation_deleteCar" {
   api_id      = aws_appsync_graphql_api.this.id
   field       = "deleteCar"
@@ -100,12 +110,12 @@ resource "aws_appsync_resolver" "mutation_deleteCar" {
   response_template = "$util.toJson($context.result)"
 }
 
-resource "aws_appsync_resolver" "mutation_createcar" {
+resource "aws_appsync_resolver" "mutation_updatecar" {
   api_id      = aws_appsync_graphql_api.this.id
-  field       = "createCar"
+  field       = "updateCar"
   type        = "Mutation"
   data_source = aws_appsync_datasource.dynamodb.name
 
-  request_template  = file("vtl-templates/Mutation.createCar.request.vtl")
+  request_template  = file("vtl-templates/Mutation.updateCar.request.vtl")
   response_template = "$util.toJson($context.result)"
 }
