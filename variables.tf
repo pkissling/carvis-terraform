@@ -1,8 +1,8 @@
 variable "project_name" {
   type = map(any)
   default = {
-    dev  = "resterampe-dev"
-    live = "resterampe-live"
+    dev  = "carvis-dev"
+    live = "carvis-live"
   }
 }
 variable "aws_region" {
