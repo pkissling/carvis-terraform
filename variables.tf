@@ -5,9 +5,7 @@ variable "project_name" {
     live = "carvis-live"
   }
 }
-variable "aws_region" {
-  default = "eu-west-1"
-}
+
 variable "env" {
   description = "The environment: dev/live"
   default     = "dev"

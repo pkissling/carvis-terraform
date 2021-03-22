@@ -1,5 +1,13 @@
 provider "aws" {
-  region = var.aws_region
+  region = "eu-west-1"
+}
+
+terraform {
+    backend "s3" {
+      bucket = "carvis-tfstate"
+      key = "app-state"
+      region = "eu-west-1"
+    }
 }
 
 resource "aws_appsync_graphql_api" "this" {
