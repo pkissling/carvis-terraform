@@ -158,8 +158,25 @@ input TableStringFilterInput {
 
 input UpdateCarInput {
   id: ID!
-  brand: String
-  color: String
-  mileage: String
-  username: String
+  brand: String!
+  type: String!
+  modelSeries: String!
+  modelYear: String!
+  modelDetails: String!
+  bodyType: String!
+  capacity: String!
+  horsePower: Float!
+  transmission: String!
+  countryOfOrigin: String
+  colorExterior: String!
+  colorExteriorManufacturer: String!
+  colorAndMaterialInterior: String!
+  mileage: Float!
+  vin: String
+  additionalEquipment: String
+  condition: String!
+  shortDescription: String
+  description: String
+  price: Float
+  ads: [String]
 }
