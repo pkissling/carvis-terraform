@@ -1,5 +1,6 @@
 #set($attribs = $util.dynamodb.toMapValues($ctx.args.input))
 #set($attribs.ownerUsername = $util.dynamodb.toDynamoDB($ctx.identity.sub))
+#set($attribs.ownerName = $util.dynamodb.toDynamoDB($ctx.identity.claims.name))
 #set($attribs.createdAt = $util.dynamodb.toDynamoDB($util.time.nowISO8601()))
 #set($attribs.updatedAt = $util.dynamodb.toDynamoDB($util.time.nowISO8601()))
 

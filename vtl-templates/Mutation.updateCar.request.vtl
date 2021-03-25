@@ -13,7 +13,7 @@
   #set( $expRemove = [] )
 
   ## Iterate through each argument, skipping keys **
-  #foreach( $entry in $util.map.copyAndRemoveAllKeys($ctx.args.input, ["id", "createdAt", "updatedAt", "ownerUsername"]).entrySet() )
+  #foreach( $entry in $util.map.copyAndRemoveAllKeys($ctx.args.input, ["id", "createdAt", "updatedAt", "ownerUsername", "ownerName"]).entrySet() )
     #if( $util.isNull($entry.value) )
       ## If the argument is set to "null", then remove that attribute from the item in DynamoDB **
 

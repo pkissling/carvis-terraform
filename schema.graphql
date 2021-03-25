@@ -22,6 +22,7 @@ type Car {
   price: Float
   ads: [String]
   ownerUsername: String!
+  ownerName: String!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -180,6 +181,7 @@ input UpdateCarInput {
   price: Float
   ads: [String]
   ownerUsername: String!
+  ownerName: String!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
