@@ -1,8 +1,8 @@
-#set($attribs = $util.dynamodb.toMapValues($ctx.args.input))
-#set($attribs.ownerUsername = $util.dynamodb.toDynamoDB($ctx.identity.sub))
-#set($attribs.ownerName = $util.dynamodb.toDynamoDB($ctx.identity.claims.name))
-#set($attribs.createdAt = $util.dynamodb.toDynamoDB($util.time.nowISO8601()))
-#set($attribs.updatedAt = $util.dynamodb.toDynamoDB($util.time.nowISO8601()))
+#set($attributes = $util.dynamodb.toMapValues($ctx.args.input))
+$util.qr($attributes.put("ownerUsername", $util.dynamodb.toDynamoDB($ctx.identity.sub)))
+$util.qr($attributes.put("ownerName", $util.dynamodb.toDynamoDB($ctx.identity.claims.name)))
+$util.qr($attributes.put("createdAt", $util.dynamodb.toDynamoDB($util.time.nowISO8601())))
+$util.qr($attributes.put("updatedAt", $util.dynamodb.toDynamoDB($util.time.nowISO8601())))
 
 {
   "version": "2017-02-28",
@@ -10,7 +10,7 @@
   "key": {
     "id": $util.dynamodb.toDynamoDBJson($util.autoId()),
   },
-  "attributeValues": $util.toJson($attribs),
+  "attributeValues": $util.toJson($attributes),
   "condition": {
     "expression": "attribute_not_exists(#id)",
     "expressionNames": {
