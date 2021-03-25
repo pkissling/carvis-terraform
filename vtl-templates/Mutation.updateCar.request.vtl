@@ -13,7 +13,7 @@
   #set( $expRemove = [] )
 
   ## Iterate through each argument, skipping keys **
-  #foreach( $entry in $util.map.copyAndRemoveAllKeys($ctx.args.input, ["id"]).entrySet() )
+  #foreach( $entry in $util.map.copyAndRemoveAllKeys($ctx.args.input, ["id", "createdAt", "updatedAt", "ownerUsername"]).entrySet() )
     #if( $util.isNull($entry.value) )
       ## If the argument is set to "null", then remove that attribute from the item in DynamoDB **
 
@@ -27,6 +27,11 @@
       $!{expValues.put(":${entry.key}", $util.dynamodb.toDynamoDB($entry.value))}
     #end
   #end
+
+  ## Audit logs
+  $!{expSet.put("#updatedAt", ":updatedAt")}
+  $!{expNames.put("#updatedAt", "updatedAt")}
+  $!{expValues.put(":updatedAt", $util.dynamodb.toDynamoDB($util.time.nowISO8601()))}
 
   ## Start building the update expression, starting with attributes we're going to SET **
   #set( $expression = "" )
