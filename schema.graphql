@@ -179,4 +179,7 @@ input UpdateCarInput {
   description: String
   price: Float
   ads: [String]
+  ownerUsername: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 }
