@@ -1,11 +1,11 @@
 default: dev
 
-dev: state
+dev:
 	terraform init
 	terraform workspace select dev
 	terraform apply
 
-live: state
+live:
 	terraform init
 	terraform workspace select live
 	terraform apply -var 'env=live'
