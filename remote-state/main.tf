@@ -1,5 +1,6 @@
 provider "aws" {
   region = "eu-west-1"
+  shared_credentials_file = "~/.aws/credentials.carvis"
 }
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "carvis-tfstate"
