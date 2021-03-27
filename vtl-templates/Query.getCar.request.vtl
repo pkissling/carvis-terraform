@@ -1,3 +1,7 @@
+#if (!$context.identity.claims["https://carvis.cloud/roles"].contains("admin") && !$context.identity.claims["https://carvis.cloud/roles"].contains("user"))
+  $util.unauthorized()
+#end
+
 {
   "version": "2017-02-28",
   "operation": "GetItem",
