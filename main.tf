@@ -5,7 +5,7 @@ provider "aws" {
 
 terraform {
     backend "s3" {
-      bucket = "carvis-tfstate"
+      bucket = "carvis-state"
       key = "app-state"
       region = "eu-west-1"
       shared_credentials_file = "~/.aws/credentials.carvis"
