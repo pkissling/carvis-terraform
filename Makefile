@@ -1,15 +1,16 @@
-default: dev
+default: dev live
 
-dev:
+dev: state
+	terraform workspace select dev || terraform workspace new dev
 	terraform init
-	terraform workspace select dev
 	terraform apply
 
 live:
+	terraform workspace select live || terraform workspace new live
 	terraform init
-	terraform workspace select live
 	terraform apply -var 'env=live'
 
 state:
-	terraform -chdir=remote-state init
-	terraform -chdir=remote-state apply
+	cd remote-state && (terraform workspace select default || terraform workspace new default)
+	cd remote-state && terraform init
+	cd remote-state && terraform apply
