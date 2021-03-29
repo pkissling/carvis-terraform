@@ -43,6 +43,10 @@ resource "aws_dynamodb_table" "cars" {
     name = "id"
     type = "S"
   }
+
+  point_in_time_recovery {
+    enabled = true
+  }
 }
 
 resource "aws_iam_role" "dynamodb" {
