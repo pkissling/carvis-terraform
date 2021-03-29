@@ -6,20 +6,20 @@ type Car {
   modelYear: String!
   modelDetails: String!
   bodyType: String!
-  capacity: String!
-  horsePower: Float!
+  capacity: Int!
   transmission: String!
+  horsePower: Float!
   countryOfOrigin: String
+  mileage: Float
   colorExterior: String!
   colorExteriorManufacturer: String!
   colorAndMaterialInterior: String!
-  mileage: Float!
   vin: String
   additionalEquipment: String
   condition: String!
+  price: Float
   shortDescription: String
   description: String
-  price: Float
   ads: [String]
   ownerUsername: String!
   ownerName: String!
@@ -39,20 +39,20 @@ input CreateCarInput {
   modelYear: String!
   modelDetails: String!
   bodyType: String!
-  capacity: String!
-  horsePower: Float!
+  capacity: Int!
   transmission: String!
+  horsePower: Float!
   countryOfOrigin: String
+  mileage: Float
   colorExterior: String!
   colorExteriorManufacturer: String!
   colorAndMaterialInterior: String!
-  mileage: Float!
   vin: String
   additionalEquipment: String
   condition: String!
+  price: Float
   shortDescription: String
   description: String
-  price: Float
   ads: [String]
 }
 
@@ -165,20 +165,20 @@ input UpdateCarInput {
   modelYear: String!
   modelDetails: String!
   bodyType: String!
-  capacity: String!
-  horsePower: Float!
+  capacity: Int!
   transmission: String!
+  horsePower: Float!
   countryOfOrigin: String
+  mileage: Float
   colorExterior: String!
   colorExteriorManufacturer: String!
   colorAndMaterialInterior: String!
-  mileage: Float!
   vin: String
   additionalEquipment: String
   condition: String!
+  price: Float
   shortDescription: String
   description: String
-  price: Float
   ads: [String]
   ownerUsername: String!
   ownerName: String!
