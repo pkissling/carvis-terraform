@@ -4,7 +4,7 @@ resource "aws_appsync_graphql_api" "this" {
   authentication_type = "OPENID_CONNECT"
 
   openid_connect_config {
-    issuer = "https://blumenerd.eu.auth0.com"
+    issuer = "https://carvis.eu.auth0.com"
   }
 }
 
@@ -29,14 +29,13 @@ resource "aws_dynamodb_table" "cars" {
     name = "id"
     type = "S"
   }
-
   point_in_time_recovery {
     enabled = true
   }
 }
 
 resource "aws_iam_role" "dynamodb" {
-  name               = "${var.project_name}-appsync-dynamodb"
+  name               = "${var.project_name}-appsync_dynamodb"
   assume_role_policy = data.aws_iam_policy_document.dynamodb_assume_role.json
 }
 

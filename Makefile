@@ -1,4 +1,4 @@
-default: dev live
+default: dev
 
 dev:
 	terraform init

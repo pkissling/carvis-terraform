@@ -1,5 +1,5 @@
 variable "project_name" {
-  type = map(any)
+  type = map(string)
   default = {
     dev  = "carvis-dev"
     live = "carvis-live"
