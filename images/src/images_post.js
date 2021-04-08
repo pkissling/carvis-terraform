@@ -9,17 +9,27 @@ exports.handler = async (event, context) => {
   const id = context.awsRequestId
   const expiresInSeconds = 60 * 5 // 5 mins
 
-  // cors
-  var corsHeaders = {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Allow-Methods": "OPTIONS,POST"
+  // configuration
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "OPTIONS,POST"
+  }
+
+  // content type
+  const contentType = event.headers['Content-Type'] || event.headers['content-type']
+  if (!contentType || !contentType.startsWith('image/')) {
+    return {
+      statusCode: 400,
+      message: `Content-Type [${contentType}] not allowed.`
     }
+  }
 
   const url = await s3.getSignedUrl('putObject', {
     "Bucket": bucket,
-    "Key": id,
-    "Expires": expiresInSeconds
+    "Key": `${id}/original`,
+    "Expires": expiresInSeconds,
+    "ContentType": contentType
   })
 
   return {
