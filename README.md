@@ -4,10 +4,21 @@
 
 ## Overview
 
-[Terraform](https://www.terraform.io/) project to setup required AWS infrastructure for [carvis](https://cavis.cloud), which consists of the following comonents:
+[Terraform](https://www.terraform.io/) project to setup required AWS infrastructure for [carvis](https://cavis.cloud), which consists of the following components:
 
-- `graphql/:` AWS AppSync GraphQL API backed by DynamoDB
-- `backend/:` Lambda backend to facility CRUD operations to S3
+- `remote-state` Terraform remote state backend
+- `graphql` AWS AppSync GraphQL API backed by DynamoDB
+- `backend` Lambda backend to facility CRUD operations to S3
+
+```tree
+├── backend
+│   └── main.tf
+├── graphql
+│   └── main.tf
+├── remote-state
+│   └── main.tf
+└── main.tf
+```
 
 ## Build
 
