@@ -122,7 +122,7 @@ resource "aws_api_gateway_method" "images_post" {
   resource_id   = aws_api_gateway_resource.images.id
   http_method   = "POST"
   authorization = "CUSTOM"
-  authorizer_id =  aws_api_gateway_authorizer.this.id
+  authorizer_id = aws_api_gateway_authorizer.this.id
 }
 
 resource "aws_api_gateway_method" "images_options" {
@@ -130,7 +130,7 @@ resource "aws_api_gateway_method" "images_options" {
   resource_id   = aws_api_gateway_resource.images.id
   http_method   = "OPTIONS"
   authorization = "CUSTOM"
-  authorizer_id =  aws_api_gateway_authorizer.this.id
+  authorizer_id = aws_api_gateway_authorizer.this.id
 }
 
 resource "aws_api_gateway_method_response" "images_options_200" {
@@ -163,7 +163,7 @@ resource "aws_api_gateway_integration" "images_options" {
   resource_id = aws_api_gateway_resource.images.id
   http_method = aws_api_gateway_method.images_options.http_method
   type        = "MOCK"
-   request_templates = {
+  request_templates = {
     "application/json" = jsonencode(
       {
         statusCode = 200
@@ -192,11 +192,11 @@ resource "aws_api_gateway_authorizer" "this" {
 }
 
 module "authorizer" {
-  source  = "jdpx/auth0-authorizer/aws"
-  version = "0.1.1"
+  source                  = "jdpx/auth0-authorizer/aws"
+  version                 = "0.1.1"
   authorizer_audience     = "ukQnXHJoRrZwGf85Uh4Jpk8V932GsfKt"
   authorizer_jwks_uri     = "https://carvis.eu.auth0.com/.well-known/jwks.json"
   authorizer_token_issuer = "https://carvis.eu.auth0.com/"
-  lambda_function_name = "${var.project_name}-authorizer"
-  lambda_role_name = "${var.project_name}-authorizer"
+  lambda_function_name    = "${var.project_name}-authorizer"
+  lambda_role_name        = "${var.project_name}-authorizer"
 }

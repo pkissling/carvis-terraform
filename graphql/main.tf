@@ -4,7 +4,7 @@ resource "aws_appsync_graphql_api" "this" {
   authentication_type = "OPENID_CONNECT"
 
   openid_connect_config {
-    issuer = "https://carvis.eu.auth0.com"
+    issuer    = "https://carvis.eu.auth0.com"
     client_id = "ukQnXHJoRrZwGf85Uh4Jpk8V932GsfKt"
   }
 }
