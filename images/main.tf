@@ -5,6 +5,12 @@ resource "aws_s3_bucket" "images" {
   bucket = "${var.project_name}-images"
   acl    = "private"
 
+  cors_rule {
+    allowed_headers = ["Content-Type"]
+    allowed_methods = ["PUT"]
+    allowed_origins = ["*"]
+    max_age_seconds = 3000
+  }
   versioning {
     enabled = true
   }
