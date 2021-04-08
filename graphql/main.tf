@@ -1,6 +1,6 @@
 resource "aws_appsync_graphql_api" "this" {
   name                = "${var.project_name}-appsync"
-  schema              = file("schema.graphql")
+  schema              = file("./graphql/schema.graphql")
   authentication_type = "OPENID_CONNECT"
 
   openid_connect_config {
