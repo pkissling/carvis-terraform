@@ -121,14 +121,16 @@ resource "aws_api_gateway_method" "images_post" {
   rest_api_id   = aws_api_gateway_rest_api.this.id
   resource_id   = aws_api_gateway_resource.images.id
   http_method   = "POST"
-  authorization = "NONE" # TODO
+  authorization = "CUSTOM"
+  authorizer_id =  aws_api_gateway_authorizer.this.id
 }
 
 resource "aws_api_gateway_method" "images_options" {
   rest_api_id   = aws_api_gateway_rest_api.this.id
   resource_id   = aws_api_gateway_resource.images.id
   http_method   = "OPTIONS"
-  authorization = "NONE"
+  authorization = "CUSTOM"
+  authorizer_id =  aws_api_gateway_authorizer.this.id
 }
 
 resource "aws_api_gateway_method_response" "images_options_200" {
@@ -180,4 +182,21 @@ resource "aws_api_gateway_integration_response" "images_options_response" {
     "method.response.header.Access-Control-Allow-Methods" = "'OPTIONS,POST'",
     "method.response.header.Access-Control-Allow-Origin"  = "'*'"
   }
+}
+
+resource "aws_api_gateway_authorizer" "this" {
+  authorizer_credentials = module.authorizer.lambda_role_arn
+  authorizer_uri         = "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/${module.authorizer.lambda_arn}/invocations"
+  name                   = "auth0"
+  rest_api_id            = aws_api_gateway_rest_api.this.id
+}
+
+module "authorizer" {
+  source  = "jdpx/auth0-authorizer/aws"
+  version = "0.1.1"
+  authorizer_audience     = "ukQnXHJoRrZwGf85Uh4Jpk8V932GsfKt"
+  authorizer_jwks_uri     = "https://carvis.eu.auth0.com/.well-known/jwks.json"
+  authorizer_token_issuer = "https://carvis.eu.auth0.com/"
+  lambda_function_name = "${var.project_name}-authorizer"
+  lambda_role_name = "${var.project_name}-authorizer"
 }
