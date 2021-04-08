@@ -79,7 +79,7 @@ data "aws_iam_policy_document" "images_post" {
 
 data "archive_file" "images_post" {
   type        = "zip"
-  source_dir  = "images/src"
+  source_dir  = "backend/src"
   output_path = "images_post.zip"
 }
 

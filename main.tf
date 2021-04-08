@@ -17,8 +17,8 @@ module "graphql" {
   project_name = lookup(var.project_name, var.env)
 }
 
-module "images" {
-  source       = "./images"
+module "backend" {
+  source       = "./backend"
   project_name = lookup(var.project_name, var.env)
 }
 
