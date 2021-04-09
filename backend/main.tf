@@ -38,8 +38,8 @@ resource "aws_iam_role_policy_attachment" "images_post_s3" {
   policy_arn = aws_iam_policy.images_s3.arn
 }
 
-resource "aws_iam_role_policy_attachment" "images_get_s3" {
-  role       = aws_iam_role.images_get.name
+resource "aws_iam_role_policy_attachment" "image_get_s3" {
+  role       = aws_iam_role.image_get.name
   policy_arn = aws_iam_policy.images_s3.arn
 }
 
@@ -91,14 +91,14 @@ data "archive_file" "images_post" {
   output_path = "images_post.zip"
 }
 
-resource "aws_lambda_function" "images_get" {
-  filename      = "images_get.zip"
-  function_name = "${var.project_name}-images_get"
-  role          = aws_iam_role.images_get.arn
-  handler       = "images_get.handler"
+resource "aws_lambda_function" "image_get" {
+  filename      = "image_get.zip"
+  function_name = "${var.project_name}-image_get"
+  role          = aws_iam_role.image_get.arn
+  handler       = "image_get.handler"
   timeout       = 10
 
-  source_code_hash = data.archive_file.images_get.output_base64sha256
+  source_code_hash = data.archive_file.image_get.output_base64sha256
 
   runtime = "nodejs12.x"
 
@@ -109,19 +109,19 @@ resource "aws_lambda_function" "images_get" {
   }
 }
 
-resource "aws_lambda_permission" "images_get" {
+resource "aws_lambda_permission" "image_get" {
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.images_get.function_name
+  function_name = aws_lambda_function.image_get.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.this.execution_arn}/*/*"
 }
 
-resource "aws_iam_role" "images_get" {
-  name               = "${var.project_name}-lambda_images_get"
-  assume_role_policy = data.aws_iam_policy_document.images_get.json
+resource "aws_iam_role" "image_get" {
+  name               = "${var.project_name}-lambda_image_get"
+  assume_role_policy = data.aws_iam_policy_document.image_get.json
 }
 
-data "aws_iam_policy_document" "images_get" {
+data "aws_iam_policy_document" "image_get" {
   statement {
     actions = ["sts:AssumeRole"]
     principals {
@@ -131,10 +131,10 @@ data "aws_iam_policy_document" "images_get" {
   }
 }
 
-data "archive_file" "images_get" {
+data "archive_file" "image_get" {
   type        = "zip"
-  source_dir  = "backend/src/images_get"
-  output_path = "images_get.zip"
+  source_dir  = "backend/src/image_get"
+  output_path = "image_get.zip"
 }
 
 ###
@@ -156,7 +156,8 @@ resource "aws_api_gateway_deployment" "v1" {
     redeployment = sha1(join(",", list(
       jsonencode(aws_api_gateway_integration.images_post),
       jsonencode(aws_api_gateway_integration.images_options),
-      jsonencode(aws_api_gateway_integration.images_get),
+      jsonencode(aws_api_gateway_integration.image_get),
+      jsonencode(aws_api_gateway_integration.image_options)
     )))
   }
 
@@ -192,7 +193,7 @@ resource "aws_api_gateway_method" "images_options" {
   authorization = "NONE"
 }
 
-resource "aws_api_gateway_method" "images_get" {
+resource "aws_api_gateway_method" "image_get" {
   rest_api_id   = aws_api_gateway_rest_api.this.id
   resource_id   = aws_api_gateway_resource.image.id
   http_method   = "GET"
@@ -204,10 +205,32 @@ resource "aws_api_gateway_method" "images_get" {
   }
 }
 
+resource "aws_api_gateway_method" "image_options" {
+  rest_api_id   = aws_api_gateway_rest_api.this.id
+  resource_id   = aws_api_gateway_resource.image.id
+  http_method   = "OPTIONS"
+  authorization = "NONE"
+}
+
 resource "aws_api_gateway_method_response" "images_options_200" {
   rest_api_id = aws_api_gateway_rest_api.this.id
   resource_id = aws_api_gateway_resource.images.id
   http_method = aws_api_gateway_method.images_options.http_method
+  status_code = "200"
+  response_models = {
+    "application/json" = "Empty"
+  }
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin"  = true
+  }
+}
+
+resource "aws_api_gateway_method_response" "image_options_200" {
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  resource_id = aws_api_gateway_resource.image.id
+  http_method = aws_api_gateway_method.image_options.http_method
   status_code = "200"
   response_models = {
     "application/json" = "Empty"
@@ -229,20 +252,34 @@ resource "aws_api_gateway_integration" "images_post" {
   uri                     = aws_lambda_function.images_post.invoke_arn
 }
 
-resource "aws_api_gateway_integration" "images_get" {
+resource "aws_api_gateway_integration" "image_get" {
   rest_api_id = aws_api_gateway_rest_api.this.id
-  resource_id = aws_api_gateway_method.images_get.resource_id
-  http_method = aws_api_gateway_method.images_get.http_method
+  resource_id = aws_api_gateway_method.image_get.resource_id
+  http_method = aws_api_gateway_method.image_get.http_method
 
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.images_get.invoke_arn
+  uri                     = aws_lambda_function.image_get.invoke_arn
 }
 
 resource "aws_api_gateway_integration" "images_options" {
   rest_api_id = aws_api_gateway_rest_api.this.id
   resource_id = aws_api_gateway_resource.images.id
   http_method = aws_api_gateway_method.images_options.http_method
+  type        = "MOCK"
+  request_templates = {
+    "application/json" = jsonencode(
+      {
+        statusCode = 200
+      }
+    )
+  }
+}
+
+resource "aws_api_gateway_integration" "image_options" {
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  resource_id = aws_api_gateway_resource.image.id
+  http_method = aws_api_gateway_method.image_options.http_method
   type        = "MOCK"
   request_templates = {
     "application/json" = jsonencode(
@@ -264,6 +301,19 @@ resource "aws_api_gateway_integration_response" "images_options_response" {
     "method.response.header.Access-Control-Allow-Origin"  = "'*'"
   }
 }
+
+resource "aws_api_gateway_integration_response" "image_options_response" {
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  resource_id = aws_api_gateway_resource.image.id
+  http_method = aws_api_gateway_method.image_options.http_method
+  status_code = aws_api_gateway_method_response.image_options_200.status_code
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'OPTIONS,GET,POST'",
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+  }
+}
+
 
 resource "aws_api_gateway_authorizer" "this" {
   authorizer_credentials = module.authorizer.lambda_role_arn
