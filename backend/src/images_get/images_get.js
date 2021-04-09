@@ -8,8 +8,8 @@ exports.handler = async (event) => {
   // configuration
   const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+    "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+    "Access-Control-Allow-Methods": "OPTIONS,GET,POST"
   }
 
   // vars
@@ -39,7 +39,7 @@ exports.handler = async (event) => {
   // otherwise compress image
   console.log('Resizing image...', imageId, size)
   const originalImage = await getObject(`${imageId}/original`)
-  const resizedImage = await resizeImage(originalImage, size)
+  const resizedImage = await resizeImage(originalImage.Body, size)
   await putObject(`${imageId}/${size}`, resizedImage, originalImage.ContentType)
   const url = getSignedUrl('getObject', `${imageId}/${size}`)
   console.log('Finished resizing image', imageId, size)
@@ -72,9 +72,9 @@ const getObject = async (key) => {
 }
 
 const resizeImage = async (originalImage, size) => {
-  return await sharp(originalImage.Body)
-  .resize({ width: size })
-  .toBuffer()
+  return await sharp(originalImage)
+    .resize({ width: size })
+    .toBuffer()
 }
 
 const putObject = async (key, resizedImage, contentType) => {
