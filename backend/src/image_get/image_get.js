@@ -32,7 +32,7 @@ exports.handler = async (event) => {
     return {
       headers: corsHeaders,
       statusCode: 200,
-      body: JSON.stringify(url)
+      body: JSON.stringify({ url })
     }
   }
 
@@ -45,7 +45,8 @@ exports.handler = async (event) => {
   console.log('Finished resizing image', imageId, size)
   return {
     headers: corsHeaders,
-    body: JSON.stringify(url)
+    statusCode: 200,
+    body: JSON.stringify({ url })
   }
 }
 
