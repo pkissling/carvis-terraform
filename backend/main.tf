@@ -201,7 +201,7 @@ resource "aws_api_gateway_method" "image_get" {
   authorizer_id = aws_api_gateway_authorizer.this.id
   request_parameters = {
     "method.request.path.imageId"     = true
-    "method.request.querystring.size" = true
+    "method.request.querystring.size" = false
   }
 }
 
