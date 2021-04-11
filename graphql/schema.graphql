@@ -20,7 +20,8 @@ type Car {
   price: Float
   shortDescription: String
   description: String
-  ads: [String]
+  ads: [String!]
+  images: [String!]
   ownerUsername: String!
   ownerName: String!
   createdAt: AWSDateTime!
@@ -53,7 +54,38 @@ input CreateCarInput {
   price: Float
   shortDescription: String
   description: String
-  ads: [String]
+  ads: [String!]
+  images: [String!]
+}
+
+input UpdateCarInput {
+  id: ID!
+  brand: String!
+  type: String!
+  modelSeries: String!
+  modelYear: String!
+  modelDetails: String!
+  bodyType: String!
+  capacity: Int!
+  transmission: String!
+  horsePower: Float!
+  countryOfOrigin: String
+  mileage: Float
+  colorExterior: String!
+  colorExteriorManufacturer: String!
+  colorAndMaterialInterior: String!
+  vin: String
+  additionalEquipment: String
+  condition: String!
+  price: Float
+  shortDescription: String
+  description: String
+  ads: [String!]
+  images: [String!]
+  ownerUsername: String!
+  ownerName: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 }
 
 type Mutation {
@@ -155,33 +187,4 @@ input TableStringFilterInput {
   notContains: String
   between: [String]
   beginsWith: String
-}
-
-input UpdateCarInput {
-  id: ID!
-  brand: String!
-  type: String!
-  modelSeries: String!
-  modelYear: String!
-  modelDetails: String!
-  bodyType: String!
-  capacity: Int!
-  transmission: String!
-  horsePower: Float!
-  countryOfOrigin: String
-  mileage: Float
-  colorExterior: String!
-  colorExteriorManufacturer: String!
-  colorAndMaterialInterior: String!
-  vin: String
-  additionalEquipment: String
-  condition: String!
-  price: Float
-  shortDescription: String
-  description: String
-  ads: [String]
-  ownerUsername: String!
-  ownerName: String!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
 }
