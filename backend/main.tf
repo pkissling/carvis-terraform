@@ -316,10 +316,10 @@ resource "aws_api_gateway_integration_response" "image_options_response" {
 
 
 resource "aws_api_gateway_authorizer" "this" {
-  authorizer_credentials = module.authorizer.lambda_role_arn
-  authorizer_uri         = "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/${module.authorizer.lambda_arn}/invocations"
-  name                   = "auth0"
-  rest_api_id            = aws_api_gateway_rest_api.this.id
+  authorizer_credentials           = module.authorizer.lambda_role_arn
+  authorizer_uri                   = "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/${module.authorizer.lambda_arn}/invocations"
+  name                             = "auth0"
+  rest_api_id                      = aws_api_gateway_rest_api.this.id
   authorizer_result_ttl_in_seconds = 0
 }
 
