@@ -90,7 +90,8 @@ const putObject = async (key, resizedImage, contentType) => {
 const getSignedUrl = (method, key) => {
   return s3.getSignedUrl(method, {
     Bucket: process.env.S3_BUCKET,
-    Key: key
+    Key: key,
+    Expires: 86400 // 1 day
   })
 }
 
