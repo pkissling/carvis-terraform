@@ -74,7 +74,7 @@ const getObject = async (key) => {
 
 const resizeImage = async (originalImage, size) => {
   return await sharp(originalImage)
-    .resize({ width: size })
+    .resize({ height: size })
     .toBuffer()
 }
 
