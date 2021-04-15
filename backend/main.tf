@@ -97,6 +97,7 @@ resource "aws_lambda_function" "image_get" {
   role          = aws_iam_role.image_get.arn
   handler       = "image_get.handler"
   timeout       = 10
+  memory_size   = 2048
 
   source_code_hash = data.archive_file.image_get.output_base64sha256
 
