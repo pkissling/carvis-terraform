@@ -14,11 +14,12 @@ terraform {
 
 module "graphql" {
   source       = "./graphql"
-  project_name = lookup(var.project_name, var.env)
+  project_name = "${var.project_name}-${var.env}"
 }
 
 module "backend" {
   source       = "./backend"
-  project_name = lookup(var.project_name, var.env)
+  project_name = var.project_name
+  env          = var.env
 }
 

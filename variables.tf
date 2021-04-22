@@ -1,9 +1,5 @@
 variable "project_name" {
-  type = map(string)
-  default = {
-    dev  = "carvis-dev"
-    live = "carvis-live"
-  }
+  default = "carvis"
 }
 
 variable "env" {

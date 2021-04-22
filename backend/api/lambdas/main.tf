@@ -1,0 +1,30 @@
+module "cars_get" {
+  source    = "./template"
+  operation = "get"
+
+  resource  = aws_api_gateway_resource.cars.path_part
+  project_name              = var.project_name
+  env                       = var.env
+  api_gateway_execution_arn = var.api_gateway_execution_arn
+  api_gateway_authorizer_id = var.api_gateway_authorizer_id
+  api_gateway_rest_api_id   = var.api_gateway_rest_api_id
+  api_gateway_resource_id   = aws_api_gateway_resource.cars.id
+}
+
+resource "aws_api_gateway_resource" "cars" {
+  rest_api_id = var.api_gateway_rest_api_id
+  parent_id   = var.api_gateway_rest_api_root_resource_id
+  path_part   = "cars"
+}
+
+output "iam_roles_require_s3_access" {
+  value = [module.cars_get.lambda_iam_role]
+}
+
+output "aws_api_gateway_integration_ids" {
+  value = [module.cars_get.aws_api_gateway_integration_id]
+}
+
+output "aws_api_gateway_resource_ids" {
+  value = [aws_api_gateway_resource.cars.id]
+}
