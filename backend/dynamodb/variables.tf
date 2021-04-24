@@ -6,6 +6,7 @@ variable "env" {
   type = string
 }
 
-variable "iam_role_names_require_s3_access" {
+variable "iam_role_names_require_dynamodb_access" {
   type = list(string)
+
 }

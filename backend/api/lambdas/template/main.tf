@@ -60,9 +60,6 @@ data "aws_iam_policy_document" "this" {
   }
 }
 
-output "lambda_iam_role" {
-  value = {
-    name = aws_iam_role.this.name
-    arn  = aws_iam_role.this.arn
-  }
+output "lambda_iam_role_name" {
+  value = aws_iam_role.this.name
 }

@@ -51,9 +51,8 @@ data "aws_iam_policy_document" "dynamodb_assume_role" {
 }
 
 resource "aws_iam_role_policy" "dynamodb" {
-  name = "${var.project_name}-appsync_dynamodb"
-  role = aws_iam_role.dynamodb.id
-
+  name   = "${var.project_name}-appsync_dynamodb"
+  role   = aws_iam_role.dynamodb.id
   policy = data.aws_iam_policy_document.dynamodb.json
 }
 

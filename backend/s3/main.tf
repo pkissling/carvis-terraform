@@ -30,7 +30,7 @@ data "aws_iam_policy_document" "this" {
 }
 
 resource "aws_iam_role_policy_attachment" "this" {
-  for_each   = { for iam_role in var.iam_roles_require_s3_access : iam_role.name => iam_role }
-  role       = each.value.name
+  count      = length(var.iam_role_names_require_s3_access)
+  role       = var.iam_role_names_require_s3_access[count.index]
   policy_arn = aws_iam_policy.this.arn
 }

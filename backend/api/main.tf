@@ -16,6 +16,10 @@ module "lambdas" {
   api_gateway_authorizer_id             = module.gateway.api_gateway_authorizer_id
 }
 
-output "iam_roles_require_s3_access" {
-  value = module.lambdas.iam_roles_require_s3_access
+output "iam_role_names_require_s3_access" {
+  value = module.lambdas.iam_role_names_require_s3_access
+}
+
+output "iam_role_names_require_dynamodb_access" {
+  value = module.lambdas.iam_role_names_require_dynamodb_access
 }

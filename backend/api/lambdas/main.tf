@@ -2,7 +2,7 @@ module "cars_get" {
   source    = "./template"
   operation = "get"
 
-  resource  = aws_api_gateway_resource.cars.path_part
+  resource                  = aws_api_gateway_resource.cars.path_part
   project_name              = var.project_name
   env                       = var.env
   api_gateway_execution_arn = var.api_gateway_execution_arn
@@ -17,8 +17,12 @@ resource "aws_api_gateway_resource" "cars" {
   path_part   = "cars"
 }
 
-output "iam_roles_require_s3_access" {
-  value = [module.cars_get.lambda_iam_role]
+output "iam_role_names_require_s3_access" {
+  value = [module.cars_get.lambda_iam_role_name]
+}
+
+output "iam_role_names_require_dynamodb_access" {
+  value = [module.cars_get.lambda_iam_role_name]
 }
 
 output "aws_api_gateway_integration_ids" {
