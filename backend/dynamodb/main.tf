@@ -30,7 +30,6 @@ data "aws_iam_policy_document" "this" {
   }
 }
 
-
 resource "aws_iam_role_policy_attachment" "this" {
   count      = length(var.iam_role_names_require_dynamodb_access)
   role       = var.iam_role_names_require_dynamodb_access[count.index]
