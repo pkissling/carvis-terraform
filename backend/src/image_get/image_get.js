@@ -73,8 +73,15 @@ const getObject = async (key) => {
 }
 
 const resizeImage = async (originalImage, size) => {
+  const portraitMode = await sharp(originalImage)
+    .metadata()
+    .then(({ width, height }) => width < height)
+
+  const height = portraitMode ? undefined : size
+  const width = portraitMode ? size : undefined
+  
   return await sharp(originalImage)
-    .resize({ height: size })
+    .resize({ height, width })
     .toBuffer()
 }
 
