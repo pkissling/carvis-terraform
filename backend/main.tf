@@ -333,8 +333,3 @@ module "authorizer" {
   lambda_function_name    = "${var.project_name}-auth0_authorizer"
   lambda_role_name        = "${var.project_name}-lambda_auth0_authorizer"
 }
-
-module "ecr" {
-  source = "./ecr"
-  project_name = var.project_name
-}
