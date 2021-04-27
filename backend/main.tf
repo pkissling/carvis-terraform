@@ -20,8 +20,15 @@ module "dynamodb" {
 
 
 module "s3" {
-  source                           = "./s3"
-  project_name                     = var.project_name
-  env                              = var.env
-  iam_role_names_require_s3_access = module.api.iam_role_names_require_s3_access
+  source       = "./s3"
+  project_name = var.project_name
+  env          = var.env
+  # iam_role_names_require_s3_access = module.api.iam_role_names_require_s3_access
+  iam_role_names_require_s3_access = concat(module.api.iam_role_names_require_s3_access, module.legacy.iam_role_names_require_s3_access)
+}
+
+module "legacy" {
+  source       = "./legacy"
+  project_name = "${var.project_name}-${var.env}-legacy"
+  s3_images_id = module.s3.s3_images_id
 }
