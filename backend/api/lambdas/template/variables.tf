@@ -30,3 +30,7 @@ variable "api_gateway_rest_api_id" {
   type = string
 }
 
+variable "s3_images_id" {
+  type = string
+}
+

@@ -4,11 +4,11 @@ resource "aws_lambda_function" "this" {
   role          = aws_iam_role.this.arn
   package_type  = "Image"
 
-  # environment {
-  #   variables = {
-  #     S3_BUCKET = aws_s3_bucket.images.id
-  #   }
-  # }
+  environment {
+    variables = {
+      S3_BUCKET = var.s3_images_id
+    }
+  }
 }
 
 resource "aws_lambda_permission" "this" {
@@ -68,17 +68,17 @@ resource "aws_cloudwatch_log_group" "this" {
 data "aws_iam_policy_document" "logging" {
   statement {
     actions = [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
     ]
     resources = ["arn:aws:logs:*:*:*"]
   }
 }
 
 resource "aws_iam_policy" "lambda_logging" {
-  name        = "${var.project_name}-${var.env}-lambda_logging"
-  path        = "/"
+  name   = "${var.project_name}-${var.env}-lambda_logging"
+  path   = "/"
   policy = data.aws_iam_policy_document.logging.json
 }
 

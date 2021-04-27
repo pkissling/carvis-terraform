@@ -21,3 +21,7 @@ variable "api_gateway_rest_api_root_resource_id" {
 variable "api_gateway_authorizer_id" {
   type = string
 }
+
+variable "s3_images_id" {
+  type = string
+}

@@ -9,6 +9,7 @@ module "cars_get" {
   api_gateway_authorizer_id = var.api_gateway_authorizer_id
   api_gateway_rest_api_id   = var.api_gateway_rest_api_id
   api_gateway_resource_id   = aws_api_gateway_resource.cars.id
+  s3_images_id              = var.s3_images_id
 }
 
 resource "aws_api_gateway_resource" "cars" {
