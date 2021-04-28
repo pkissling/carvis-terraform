@@ -79,7 +79,7 @@ const resizeImage = async (originalImage, size) => {
 
   const height = portraitMode ? undefined : size
   const width = portraitMode ? size : undefined
-  
+
   return await sharp(originalImage)
     .resize({ height, width })
     .toBuffer()
@@ -98,7 +98,7 @@ const getSignedUrl = (method, key) => {
   return s3.getSignedUrl(method, {
     Bucket: process.env.S3_BUCKET,
     Key: key,
-    Expires: 86400 // 1 day
+    Expires: 86400 * 7 // 7 days
   })
 }
 
