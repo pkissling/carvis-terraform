@@ -14,3 +14,6 @@ state:
 	cd remote-state && terraform init
 	cd remote-state && (terraform workspace select default || terraform workspace new default)
 	cd remote-state && terraform apply
+
+format:
+	terraform fmt -recursive

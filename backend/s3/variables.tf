@@ -5,3 +5,7 @@ variable "project_name" {
 variable "env" {
   type = string
 }
+
+variable "iam_role_names_require_s3_access" {
+  type = list(string)
+}

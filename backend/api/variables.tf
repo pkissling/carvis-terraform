@@ -5,3 +5,7 @@ variable "project_name" {
 variable "env" {
   type = string
 }
+
+variable "s3_images_id" {
+  type = string
+}
