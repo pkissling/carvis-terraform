@@ -1,6 +1,6 @@
 resource "aws_lambda_function" "this" {
   image_uri     = "${aws_ecr_repository.this.repository_url}:${var.env}"
-  function_name = "${var.project_name}-${var.env}-${var.resource}_${var.operation}"
+  function_name = "${var.project_name}-${var.env}_${var.resource}-${var.operation}"
   role          = aws_iam_role.this.arn
   package_type  = "Image"
 
