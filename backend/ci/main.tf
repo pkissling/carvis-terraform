@@ -20,7 +20,6 @@ data "aws_iam_policy_document" "ecr" {
   statement {
     actions = [
       "ecr:GetAuthorizationToken",
-      "sts:GetServiceBearerToken",
       "ecr:BatchCheckLayerAvailability",
       "ecr:GetRepositoryPolicy",
       "ecr:DescribeRepositories",
@@ -28,8 +27,7 @@ data "aws_iam_policy_document" "ecr" {
       "ecr:InitiateLayerUpload",
       "ecr:UploadLayerPart",
       "ecr:CompleteLayerUpload",
-      "ecr:PutImage",
-      "lambda:UpdateFunctionCode"
+      "ecr:PutImage"
     ]
     resources = ["*"]
   }
@@ -48,15 +46,7 @@ resource "aws_iam_user_policy_attachment" "github_lambda" {
 data "aws_iam_policy_document" "lambda" {
   statement {
     actions = [
-      "ecr:GetAuthorizationToken",
-      "ecr:BatchCheckLayerAvailability",
-      "ecr:GetRepositoryPolicy",
-      "ecr:DescribeRepositories",
-      "ecr:DescribeImages",
-      "ecr:InitiateLayerUpload",
-      "ecr:UploadLayerPart",
-      "ecr:CompleteLayerUpload",
-      "ecr:PutImage",
+      "lambda:UpdateFunctionCode"
     ]
     resources = ["*"]
   }
