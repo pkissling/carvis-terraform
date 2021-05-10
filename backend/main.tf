@@ -32,3 +32,11 @@ module "legacy" {
   project_name = "${var.project_name}-${var.env}-legacy"
   s3_images_id = module.s3.s3_images_id
 }
+
+output "dynamo_db_cars_table_name" {
+  value = module.dynamodb.dynamo_db_cars_table_name
+}
+
+output "dynamo_db_cars_table_arn" {
+  value = module.dynamodb.dynamo_db_cars_table_arn
+}

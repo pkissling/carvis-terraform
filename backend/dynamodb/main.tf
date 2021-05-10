@@ -35,3 +35,11 @@ resource "aws_iam_role_policy_attachment" "this" {
   role       = var.iam_role_names_require_dynamodb_access[count.index]
   policy_arn = aws_iam_policy.this.arn
 }
+
+output "dynamo_db_cars_table_name" {
+  value = aws_dynamodb_table.cars.name
+}
+
+output "dynamo_db_cars_table_arn" {
+  value = aws_dynamodb_table.cars.arn
+}

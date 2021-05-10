@@ -16,22 +16,7 @@ resource "aws_appsync_datasource" "dynamodb" {
   service_role_arn = aws_iam_role.dynamodb.arn
 
   dynamodb_config {
-    table_name = aws_dynamodb_table.cars.name
-  }
-}
-
-resource "aws_dynamodb_table" "cars" {
-  name           = "${var.project_name}-appsync_cars"
-  hash_key       = "id"
-  read_capacity  = 1
-  write_capacity = 1
-
-  attribute {
-    name = "id"
-    type = "S"
-  }
-  point_in_time_recovery {
-    enabled = true
+    table_name = var.dynamo_db_cars_table_name
   }
 }
 
@@ -63,7 +48,7 @@ data "aws_iam_policy_document" "dynamodb" {
     ]
 
     resources = [
-      aws_dynamodb_table.cars.arn
+      var.dynamo_db_cars_table_arn
     ]
   }
 }
