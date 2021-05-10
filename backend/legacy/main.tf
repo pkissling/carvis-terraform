@@ -109,12 +109,12 @@ resource "aws_api_gateway_deployment" "v1" {
   stage_name  = "v1"
 
   triggers = {
-    redeployment = sha1(join(",", list(
-      jsonencode(aws_api_gateway_integration.images_post),
-      jsonencode(aws_api_gateway_integration.images_options),
-      jsonencode(aws_api_gateway_integration.image_get),
-      jsonencode(aws_api_gateway_integration.image_options)
-    )))
+    redeployment = sha1(jsonencode([
+      aws_api_gateway_integration.images_post,
+      aws_api_gateway_integration.images_options,
+      aws_api_gateway_integration.image_get,
+      aws_api_gateway_integration.image_options
+    ]))
   }
 
   lifecycle {
