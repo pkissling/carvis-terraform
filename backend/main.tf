@@ -31,6 +31,7 @@ module "legacy" {
   source       = "./legacy"
   project_name = "${var.project_name}-${var.env}-legacy"
   s3_images_id = module.s3.s3_images_id
+  env          = var.env
 }
 
 output "dynamo_db_cars_table_name" {

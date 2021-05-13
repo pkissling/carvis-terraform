@@ -13,7 +13,8 @@ resource "aws_lambda_function" "images_post" {
 
   environment {
     variables = {
-      S3_BUCKET = var.s3_images_id
+      S3_BUCKET          = var.s3_images_id
+      SENTRY_ENVIRONMENT = lookup({ live = "production" }, var.env, "deploy-preview")
     }
   }
 }
@@ -60,7 +61,8 @@ resource "aws_lambda_function" "image_get" {
 
   environment {
     variables = {
-      S3_BUCKET = var.s3_images_id
+      S3_BUCKET          = var.s3_images_id
+      SENTRY_ENVIRONMENT = lookup({ live = "production" }, var.env, "deploy-preview")
     }
   }
 }

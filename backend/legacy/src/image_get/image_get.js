@@ -2,8 +2,14 @@
 const aws = require('aws-sdk')
 const sharp = require('sharp')
 const s3 = new aws.S3()
+const Sentry = require("@sentry/serverless")
 
-exports.handler = async (event) => {
+Sentry.AWSLambda.init({
+  dsn: "https://3dff43a3980d4418a33efdff9b005acb@o582664.ingest.sentry.io/5763983",
+  tracesSampleRate: 1.0
+})
+
+exports.handler = Sentry.AWSLambda.wrapHandler(async (event) => {
 
   // configuration
   const corsHeaders = {
@@ -48,7 +54,7 @@ exports.handler = async (event) => {
     statusCode: 200,
     body: JSON.stringify({ url })
   }
-}
+})
 
 const fileExists = async (key) => {
   console.log('Checking if file exists...', key)

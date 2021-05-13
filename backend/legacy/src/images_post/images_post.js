@@ -1,8 +1,14 @@
 'use strict';
 const aws = require('aws-sdk');
 const s3 = new aws.S3();
+const Sentry = require("@sentry/serverless")
 
-exports.handler = async (event, context) => {
+Sentry.AWSLambda.init({
+  dsn: "https://3dff43a3980d4418a33efdff9b005acb@o582664.ingest.sentry.io/5763983",
+  tracesSampleRate: 1.0
+})
+
+exports.handler = Sentry.AWSLambda.wrapHandler(async (event, context) => {
 
   // vars
   const bucket = process.env.S3_BUCKET
@@ -37,4 +43,4 @@ exports.handler = async (event, context) => {
     statusCode: 200,
     body: JSON.stringify({ url, id })
   }
-}
+})
