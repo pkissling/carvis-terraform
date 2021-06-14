@@ -6,7 +6,8 @@ resource "aws_lambda_function" "this" {
 
   environment {
     variables = {
-      S3_BUCKET = var.s3_images_id
+      S3_BUCKET                    = var.s3_images_id
+      DYNAMODB_REQUESTS_TABLE_NAME = var.dynamodb_requests_table_name
     }
   }
 }
@@ -77,7 +78,7 @@ data "aws_iam_policy_document" "logging" {
 }
 
 resource "aws_iam_policy" "lambda_logging" {
-  name   = "${var.project_name}-${var.env}-lambda_logging"
+  name   = "${var.project_name}-${var.env}_${var.resource}-${var.operation}-lambda_logging"
   path   = "/"
   policy = data.aws_iam_policy_document.logging.json
 }

@@ -1,9 +1,10 @@
 
 module "api" {
-  source       = "./api"
-  project_name = var.project_name
-  env          = var.env
-  s3_images_id = module.s3.s3_images_id
+  source                       = "./api"
+  project_name                 = var.project_name
+  env                          = var.env
+  s3_images_id                 = module.s3.s3_images_id
+  dynamodb_requests_table_name = module.dynamodb.dynamodb_requests_table_name
 }
 
 module "ci" {

@@ -31,6 +31,12 @@ variable "api_gateway_rest_api_id" {
 }
 
 variable "s3_images_id" {
-  type = string
+  type    = string
+  default = null
+}
+
+variable "dynamodb_requests_table_name" {
+  type    = string
+  default = null
 }
 
