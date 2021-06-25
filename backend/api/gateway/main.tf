@@ -19,7 +19,10 @@ resource "aws_api_gateway_deployment" "v1" {
   stage_name  = "v1"
 
   triggers = {
-    redeployment = sha1(file("./main.tf"))
+    redeployment = sha1(join("", [
+      sha1(file("./backend/api/gateway/main.tf")),
+      sha1(file("./backend/api/lambdas/main.tf"))
+    ]))
   }
 
   lifecycle {

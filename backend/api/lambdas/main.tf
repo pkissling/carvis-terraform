@@ -16,6 +16,20 @@ module "requests_get" {
   source    = "./template"
   operation = "get"
 
+  resource                     = aws_api_gateway_resource.requests.path_part # requests instead of request
+  project_name                 = var.project_name
+  env                          = var.env
+  api_gateway_execution_arn    = var.api_gateway_execution_arn
+  api_gateway_authorizer_id    = var.api_gateway_authorizer_id
+  api_gateway_rest_api_id      = var.api_gateway_rest_api_id
+  api_gateway_resource_id      = aws_api_gateway_resource.request.id
+  dynamodb_requests_table_name = var.dynamodb_requests_table_name
+}
+
+module "requests_post" {
+  source    = "./template"
+  operation = "post"
+
   resource                     = aws_api_gateway_resource.requests.path_part
   project_name                 = var.project_name
   env                          = var.env
@@ -38,12 +52,21 @@ resource "aws_api_gateway_resource" "requests" {
   path_part   = "requests"
 }
 
+resource "aws_api_gateway_resource" "request" {
+  rest_api_id = var.api_gateway_rest_api_id
+  parent_id   = aws_api_gateway_resource.requests.id
+  path_part   = "{requestId}"
+}
+
 output "iam_role_names_require_s3_access" {
   value = [module.cars_get.lambda_iam_role_name]
 }
 
 output "iam_role_names_require_dynamodb_access" {
-  value = [module.cars_get.lambda_iam_role_name]
+  value = [
+    module.requests_get.lambda_iam_role_name,
+    module.requests_post.lambda_iam_role_name
+  ]
 }
 
 output "aws_api_gateway_integration_ids" {
@@ -51,5 +74,9 @@ output "aws_api_gateway_integration_ids" {
 }
 
 output "aws_api_gateway_resource_ids" {
-  value = [aws_api_gateway_resource.cars.id]
+  value = [
+    aws_api_gateway_resource.cars.id,
+    aws_api_gateway_resource.requests.id,
+    aws_api_gateway_resource.request.id,
+  ]
 }
