@@ -8,6 +8,7 @@ resource "aws_lambda_function" "this" {
     variables = {
       S3_BUCKET                    = var.s3_images_id
       DYNAMODB_REQUESTS_TABLE_NAME = var.dynamodb_requests_table_name
+      AUTHORITY                    = "https://carvis.eu.auth0.com/"
     }
   }
 }
