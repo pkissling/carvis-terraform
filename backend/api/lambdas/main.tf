@@ -12,11 +12,11 @@ module "cars_get" {
   s3_images_id              = var.s3_images_id
 }
 
-module "requests_get" {
+module "request_get" {
   source    = "./template"
   operation = "get"
 
-  resource                     = aws_api_gateway_resource.requests.path_part # requests instead of request
+  resource                     = "request" # not available as variable. only path param {requestId}
   project_name                 = var.project_name
   env                          = var.env
   api_gateway_execution_arn    = var.api_gateway_execution_arn
@@ -64,7 +64,7 @@ output "iam_role_names_require_s3_access" {
 
 output "iam_role_names_require_dynamodb_access" {
   value = [
-    module.requests_get.lambda_iam_role_name,
+    module.request_get.lambda_iam_role_name,
     module.requests_post.lambda_iam_role_name
   ]
 }
