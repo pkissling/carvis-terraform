@@ -43,6 +43,16 @@ resource "aws_iam_user_policy_attachment" "github_lambda" {
   policy_arn = aws_iam_policy.github_lambda.arn
 }
 
+resource "aws_iam_user_policy_attachment" "github_ebs_managed_updates" {
+  user       = aws_iam_user.github.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy"
+}
+
+resource "aws_iam_user_policy_attachment" "github_ebs_web_tier" {
+  user       = aws_iam_user.github.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
+}
+
 data "aws_iam_policy_document" "lambda" {
   statement {
     actions = [

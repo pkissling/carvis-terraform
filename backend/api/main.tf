@@ -18,10 +18,16 @@ module "lambdas" {
   api_gateway_authorizer_id             = module.gateway.api_gateway_authorizer_id
 }
 
+module "beanstalk" {
+  source       = "./beanstalk"
+  project_name = var.project_name
+  env          = var.env
+}
+
 output "iam_role_names_require_s3_access" {
   value = module.lambdas.iam_role_names_require_s3_access
 }
 
 output "iam_role_names_require_dynamodb_access" {
-  value = module.lambdas.iam_role_names_require_dynamodb_access
+  value = concat(module.lambdas.iam_role_names_require_dynamodb_access,[module.beanstalk.ebs_iam_role_name])
 }
