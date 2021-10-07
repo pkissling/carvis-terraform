@@ -29,5 +29,5 @@ output "iam_role_names_require_s3_access" {
 }
 
 output "iam_role_names_require_dynamodb_access" {
-  value = concat(module.lambdas.iam_role_names_require_dynamodb_access,[module.beanstalk.ebs_iam_role_name])
+  value = concat(module.lambdas.iam_role_names_require_dynamodb_access, [module.beanstalk.ebs_iam_role_name])
 }
