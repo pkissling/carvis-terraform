@@ -26,6 +26,13 @@ resource "aws_elastic_beanstalk_environment" "this" {
   }
 
   setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SPRING_PROFILES_ACTIVE"
+    value     = var.env
+  }
+
+
+  setting {
     namespace = "aws:elasticbeanstalk:application"
     name      = "Application Healthcheck URL"
     value     = "/actuator/health"
