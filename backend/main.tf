@@ -5,6 +5,7 @@ module "api" {
   env                          = var.env
   s3_images_id                 = module.s3.s3_images_id
   dynamodb_requests_table_name = module.dynamodb.dynamodb_requests_table_name
+  certificate_id               = var.certificate_id
 }
 
 module "ci" {
@@ -41,4 +42,8 @@ output "dynamo_db_cars_table_name" {
 
 output "dynamo_db_cars_table_arn" {
   value = module.dynamodb.dynamo_db_cars_table_arn
+}
+
+output "ebs_cname" {
+  value = module.api.ebs_cname
 }

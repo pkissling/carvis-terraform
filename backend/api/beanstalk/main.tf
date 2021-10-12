@@ -43,6 +43,30 @@ resource "aws_elastic_beanstalk_environment" "this" {
     name      = "StreamLogs"
     value     = "true"
   }
+
+  setting {
+    namespace = "aws:elb:listener:443"
+    name      = "ListenerProtocol"
+    value     = "HTTPS"
+  }
+
+  setting {
+    namespace = "aws:elb:listener:443"
+    name      = "InstancePort"
+    value     = "80"
+  }
+
+  setting {
+    namespace = "aws:elb:listener:443"
+    name      = "InstanceProtocol"
+    value     = "HTTP"
+  }
+
+  setting {
+    namespace = "aws:elb:listener:443"
+    name      = "SSLCertificateId"
+    value     = var.certificate_id
+  }
 }
 
 resource "aws_iam_instance_profile" "this" {
@@ -72,4 +96,8 @@ data "aws_iam_policy_document" "this" {
 
 output "ebs_iam_role_name" {
   value = aws_iam_role.this.name
+}
+
+output "ebs_cname" {
+  value = aws_elastic_beanstalk_environment.this.cname
 }

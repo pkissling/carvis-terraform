@@ -5,3 +5,7 @@ variable "project_name" {
 variable "env" {
   type = string
 }
+
+variable "certificate_id" {
+  type = string
+}
