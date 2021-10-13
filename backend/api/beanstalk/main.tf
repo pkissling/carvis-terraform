@@ -45,6 +45,12 @@ resource "aws_elastic_beanstalk_environment" "this" {
   }
 
   setting {
+    namespace = "aws:elb:listener:80"
+    name      = "ListenerEnabled"
+    value     = "false"
+  }
+
+  setting {
     namespace = "aws:elb:listener:443"
     name      = "ListenerProtocol"
     value     = "HTTPS"
