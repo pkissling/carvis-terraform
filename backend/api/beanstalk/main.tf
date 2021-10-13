@@ -73,6 +73,18 @@ resource "aws_elastic_beanstalk_environment" "this" {
     name      = "SSLCertificateId"
     value     = var.certificate_id
   }
+
+  setting {
+    namespace = "aws:autoscaling:updatepolicy:rollingupdate"
+    name      = "RollingUpdateEnabled"
+    value     = "true"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:updatepolicy:rollingupdate"
+    name      = "RollingUpdateType"
+    value     = "Health"
+  }
 }
 
 resource "aws_iam_instance_profile" "this" {
