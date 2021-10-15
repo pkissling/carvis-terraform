@@ -85,6 +85,24 @@ resource "aws_elastic_beanstalk_environment" "this" {
     name      = "RollingUpdateType"
     value     = "Health"
   }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:command"
+    name      = "DeploymentPolicy"
+    value     = "RollingWithAdditionalBatch"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:command"
+    name      = "BatchSizeType"
+    value     = "Percentage"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:command"
+    name      = "BatchSize"
+    value     = "100"
+  }
 }
 
 resource "aws_iam_instance_profile" "this" {
