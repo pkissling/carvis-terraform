@@ -10,6 +10,10 @@ variable "website_host_ip" {
   type = string
 }
 
+variable "website_cname" {
+  type = string
+}
+
 variable "certificate_validation_record_name" {
   type = string
 }

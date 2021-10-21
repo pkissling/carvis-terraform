@@ -1,20 +1,19 @@
 resource "aws_route53_zone" "this" {
   name = var.domain
 }
-resource "aws_route53_record" "root" {
+resource "aws_route53_record" "apex" {
   zone_id = aws_route53_zone.this.zone_id
   name    = var.env == "live" ? "" : var.env
-  type    = "A"
+  type    = var.env == "live" ? "A" : "CNAME"
   ttl     = "300"
-  records = [var.website_host_ip]
+  records = var.env == "live" ? [var.website_host_ip] : [var.website_cname]
 }
-
 resource "aws_route53_record" "www" {
   zone_id = aws_route53_zone.this.zone_id
   name    = var.env == "live" ? "www" : "www.${var.env}"
-  type    = "A"
+  type    = "CNAME"
   ttl     = "300"
-  records = [var.website_host_ip]
+  records = [var.website_cname]
 }
 
 resource "aws_route53_record" "api" {

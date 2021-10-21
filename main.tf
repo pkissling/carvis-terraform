@@ -30,6 +30,7 @@ module "domain" {
   domain                              = var.domain
   env                                 = var.env
   website_host_ip                     = var.website_host_ip
+  website_cname                       = var.website_cnames[var.env]
   api_cname                           = module.backend.ebs_cname
   certificate_validation_record_name  = module.certificate.certificate_validation_record_name
   certificate_validation_record_type  = module.certificate.certificate_validation_record_type
