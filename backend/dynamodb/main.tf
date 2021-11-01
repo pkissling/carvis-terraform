@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "cars" {
-  name           = "${var.project_name}-${var.env}-cars"
+  name           = "${var.env}-${var.project_name}-cars"
   hash_key       = "id"
   read_capacity  = 1
   write_capacity = 1
