@@ -5,7 +5,7 @@ resource "aws_elastic_beanstalk_application" "this" {
 resource "aws_elastic_beanstalk_environment" "this" {
   name                = "${var.project_name}-${var.env}"
   application         = aws_elastic_beanstalk_application.this.name
-  solution_stack_name = "64bit Amazon Linux 2 v3.2.6 running Corretto 11"
+  solution_stack_name = "64bit Amazon Linux 2 v3.2.7 running Corretto 11"
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
