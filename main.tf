@@ -36,10 +36,3 @@ module "domain" {
   certificate_validation_record_type  = module.certificate.certificate_validation_record_type
   certificate_validation_record_value = module.certificate.certificate_validation_record_value
 }
-
-module "graphql" {
-  source                    = "./graphql"
-  project_name              = "${var.project_name}-${var.env}"
-  dynamo_db_cars_table_name = module.backend.dynamo_db_cars_table_name
-  dynamo_db_cars_table_arn  = module.backend.dynamo_db_cars_table_arn
-}
