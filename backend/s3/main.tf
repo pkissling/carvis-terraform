@@ -21,11 +21,15 @@ resource "aws_iam_policy" "images" {
 data "aws_iam_policy_document" "images" {
   statement {
     actions = [
-      "s3:PutObject",
-      "s3:GetObject"
+      "s3:List*",
+      "s3:Get*",
+      "s3:Put*",
+      "s3:Delete*"
     ]
-    # resources = jsonencode(var.iam_roles_require_s3_access)
-    resources = ["*"] # TODO
+    resources = [
+      aws_s3_bucket.images.arn,
+      "${aws_s3_bucket.images.arn}/*"
+    ]
   }
 }
 
