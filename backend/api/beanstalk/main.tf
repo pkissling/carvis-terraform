@@ -31,6 +31,18 @@ resource "aws_elastic_beanstalk_environment" "this" {
     value     = var.env
   }
 
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AUTH_CLIENT_ID"
+    value     = var.auth_client_id
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "AUTH_CLIENT_SECRET"
+    value     = var.auth_client_secret
+  }
+
 
   setting {
     namespace = "aws:elasticbeanstalk:application"

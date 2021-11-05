@@ -1,8 +1,10 @@
 module "beanstalk" {
-  source         = "./beanstalk"
-  project_name   = var.project_name
-  env            = var.env
-  certificate_id = var.certificate_id
+  source             = "./beanstalk"
+  project_name       = var.project_name
+  env                = var.env
+  certificate_id     = var.certificate_id
+  auth_client_id     = var.auth_client_id
+  auth_client_secret = var.auth_client_secret
 }
 
 output "iam_role_names_require_s3_access" {

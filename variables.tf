@@ -21,3 +21,14 @@ variable "website_cnames" {
     live = "condescending-bohr-dc4006.netlify.app"
   }
 }
+
+variable "auth_client_id" {
+  description = "Auth0 Client ID"
+  type        = string
+  sensitive   = true
+}
+variable "auth_client_secret" {
+  description = "Auth0 Client Secret"
+  type        = string
+  sensitive   = true
+}

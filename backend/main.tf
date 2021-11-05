@@ -6,6 +6,8 @@ module "api" {
   s3_images_id                 = module.s3.s3_images_id
   dynamodb_requests_table_name = module.dynamodb.dynamodb_requests_table_name
   certificate_id               = var.certificate_id
+  auth_client_id               = var.auth_client_id
+  auth_client_secret           = var.auth_client_secret
 }
 
 module "ci" {

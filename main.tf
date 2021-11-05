@@ -13,10 +13,12 @@ terraform {
 }
 
 module "backend" {
-  source         = "./backend"
-  project_name   = var.project_name
-  env            = var.env
-  certificate_id = module.certificate.certificate_id
+  source             = "./backend"
+  project_name       = var.project_name
+  env                = var.env
+  certificate_id     = module.certificate.certificate_id
+  auth_client_id     = var.auth_client_id
+  auth_client_secret = var.auth_client_secret
 }
 
 module "certificate" {
