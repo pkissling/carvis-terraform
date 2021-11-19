@@ -14,7 +14,7 @@ resource "aws_dynamodb_table" "cars" {
 }
 
 resource "aws_dynamodb_table" "requests" {
-  name           = "${var.project_name}-${var.env}-requests"
+  name           = "${var.env}-${var.project_name}-requests"
   hash_key       = "id"
   read_capacity  = 1
   write_capacity = 1
