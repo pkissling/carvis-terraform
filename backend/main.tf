@@ -1,13 +1,11 @@
 
 module "api" {
-  source                       = "./api"
-  project_name                 = var.project_name
-  env                          = var.env
-  s3_images_id                 = module.s3.s3_images_id
-  dynamodb_requests_table_name = module.dynamodb.dynamodb_requests_table_name
-  certificate_id               = var.certificate_id
-  auth_client_id               = var.auth_client_id
-  auth_client_secret           = var.auth_client_secret
+  source             = "./api"
+  project_name       = var.project_name
+  env                = var.env
+  certificate_id     = var.certificate_id
+  auth_client_id     = var.auth_client_id
+  auth_client_secret = var.auth_client_secret
 }
 
 module "ci" {
@@ -28,14 +26,6 @@ module "s3" {
   project_name                     = var.project_name
   env                              = var.env
   iam_role_names_require_s3_access = module.api.iam_role_names_require_s3_access
-}
-
-output "dynamo_db_cars_table_name" {
-  value = module.dynamodb.dynamo_db_cars_table_name
-}
-
-output "dynamo_db_cars_table_arn" {
-  value = module.dynamodb.dynamo_db_cars_table_arn
 }
 
 output "ebs_cname" {

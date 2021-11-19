@@ -38,7 +38,3 @@ resource "aws_iam_role_policy_attachment" "images" {
   role       = var.iam_role_names_require_s3_access[count.index]
   policy_arn = aws_iam_policy.images.arn
 }
-
-output "s3_images_id" {
-  value = aws_s3_bucket.images.id
-}
