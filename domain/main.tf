@@ -17,6 +17,7 @@ resource "aws_route53_record" "www" {
 }
 
 resource "aws_route53_record" "api" {
+  count   = var.env == "live" ? 1 : 0
   zone_id = aws_route53_zone.this.zone_id
   name    = var.env == "live" ? "api" : "api.${var.env}"
   type    = "CNAME"

@@ -3,6 +3,7 @@ resource "aws_elastic_beanstalk_application" "this" {
 }
 
 resource "aws_elastic_beanstalk_environment" "this" {
+  count               = var.env == "dev" ? 0 : 1
   name                = "${var.project_name}-${var.env}"
   application         = aws_elastic_beanstalk_application.this.name
   solution_stack_name = "64bit Amazon Linux 2 v3.2.7 running Corretto 11"
@@ -153,5 +154,5 @@ output "ebs_iam_role_name" {
 }
 
 output "ebs_cname" {
-  value = aws_elastic_beanstalk_environment.this.cname
+  value = var.env == "dev" ? "dummy" : aws_elastic_beanstalk_environment.this[0].cname
 }
