@@ -18,3 +18,7 @@ output "iam_role_names_require_dynamodb_access" {
 output "ebs_cname" {
   value = module.beanstalk.ebs_cname
 }
+
+output "ebs_iam_role_name" {
+  value = module.beanstalk.ebs_iam_role_name
+}

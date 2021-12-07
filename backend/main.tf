@@ -20,12 +20,18 @@ module "dynamodb" {
   iam_role_names_require_dynamodb_access = module.api.iam_role_names_require_dynamodb_access
 }
 
-
 module "s3" {
   source                           = "./s3"
   project_name                     = var.project_name
   env                              = var.env
   iam_role_names_require_s3_access = module.api.iam_role_names_require_s3_access
+}
+
+module "queues" {
+  source            = "./queues"
+  project_name      = var.project_name
+  env               = var.env
+  ebs_iam_role_name = module.api.ebs_iam_role_name
 }
 
 output "ebs_cname" {

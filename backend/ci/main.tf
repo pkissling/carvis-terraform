@@ -1,6 +1,7 @@
 resource "aws_iam_user" "github" {
   name = "${var.project_name}-github"
 }
+
 resource "aws_iam_access_key" "github" {
   user = aws_iam_user.github.name
 }
