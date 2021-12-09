@@ -29,3 +29,7 @@ variable "certificate_validation_record_value" {
 variable "api_cname" {
   type = string
 }
+
+variable "mail_domain_validation_dkim_tokens" {
+  type = list(string)
+}

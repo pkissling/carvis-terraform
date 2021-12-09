@@ -14,6 +14,7 @@ variable "auth_client_id" {
   type      = string
   sensitive = true
 }
+
 variable "auth_client_secret" {
   type      = string
   sensitive = true

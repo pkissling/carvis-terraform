@@ -37,4 +37,14 @@ module "domain" {
   certificate_validation_record_name  = module.certificate.certificate_validation_record_name
   certificate_validation_record_type  = module.certificate.certificate_validation_record_type
   certificate_validation_record_value = module.certificate.certificate_validation_record_value
+  mail_domain_validation_dkim_tokens  = module.mail.mail_domain_validation_dkim_tokens
+}
+
+module "mail" {
+  source         = "./mail"
+  project_name   = var.project_name
+  env            = var.env
+  domain         = var.domain
+  aws_account_id = var.aws_account_id
+  to_mail        = var.to_mail
 }

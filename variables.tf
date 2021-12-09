@@ -27,8 +27,19 @@ variable "auth_client_id" {
   type        = string
   sensitive   = true
 }
+
 variable "auth_client_secret" {
   description = "Auth0 Client Secret"
   type        = string
   sensitive   = true
 }
+
+variable "aws_account_id" {
+  sensitive = true
+}
+
+variable "to_mail" {
+  description = "Fowards all email to domain to this mail address"
+  type        = string
+}
+
