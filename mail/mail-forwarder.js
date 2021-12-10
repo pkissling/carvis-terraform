@@ -38,7 +38,7 @@ console.log("AWS Lambda SES Forwarder // @arithmetric // Version 5.0.0");
 var defaultConfig = {
   fromEmail: process.env.FROM_MAIL,
   toMail: process.env.TO_MAIL,
-  subjectPrefix: "",
+  subjectPrefix: process.env.SUBJECT_PREFIX,
   emailBucket: process.env.BUCKET_INCOMING_MAILS,
   emailKeyPrefix: ""
 };

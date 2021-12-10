@@ -91,6 +91,7 @@ resource "aws_lambda_function" "mail_forwarder" {
       TO_MAIL               = var.to_mail
       FROM_MAIL             = "mailforwarder@${var.domain}"
       BUCKET_INCOMING_MAILS = aws_s3_bucket.incoming_mails[0].id
+      SUBJECT_PREFIX        = "${var.domain} | "
     }
   }
 }
