@@ -41,10 +41,11 @@ module "domain" {
 }
 
 module "mail" {
-  source         = "./mail"
-  project_name   = var.project_name
-  env            = var.env
-  domain         = var.domain
-  aws_account_id = var.aws_account_id
-  to_mail        = var.to_mail
+  source            = "./mail"
+  project_name      = var.project_name
+  env               = var.env
+  domain            = var.domain
+  aws_account_id    = var.aws_account_id
+  to_mail           = var.to_mail
+  ebs_iam_role_name = module.backend.ebs_iam_role_name
 }

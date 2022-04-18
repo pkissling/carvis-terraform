@@ -95,6 +95,9 @@ resource "aws_iam_policy" "user_signup_read_sqs" {
 data "aws_iam_policy_document" "user_signup_read_sqs" {
   statement {
     actions = [
+      "sqs:DeleteMessage",
+      "sqs:GetQueueAttributes",
+      "sqs:GetQueueUrl",
       "sqs:ReceiveMessage"
     ]
 

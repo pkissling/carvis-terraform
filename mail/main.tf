@@ -127,6 +127,12 @@ resource "aws_lambda_permission" "mail_forwarder" {
   source_account = var.aws_account_id
 }
 
+resource "aws_iam_role_policy_attachment" "ebs_send_mails" {
+  count      = var.env == "live" ? 1 : 0
+  role       = var.ebs_iam_role_name
+  policy_arn = aws_iam_policy.send_emails[0].arn
+}
+
 resource "aws_iam_role_policy_attachment" "mail_forwarder_send_mails" {
   count      = var.env == "live" ? 1 : 0
   role       = aws_iam_role.mail_forwarder[0].name

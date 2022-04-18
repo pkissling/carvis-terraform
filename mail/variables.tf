@@ -17,3 +17,7 @@ variable "aws_account_id" {
 variable "to_mail" {
   type = string
 }
+
+variable "ebs_iam_role_name" {
+  type = string
+}

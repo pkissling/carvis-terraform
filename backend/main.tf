@@ -37,3 +37,7 @@ module "queues" {
 output "ebs_cname" {
   value = module.api.ebs_cname
 }
+
+output "ebs_iam_role_name" {
+  value = module.api.ebs_iam_role_name
+}
