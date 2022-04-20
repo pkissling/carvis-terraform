@@ -50,8 +50,3 @@ module "mail" {
   ebs_iam_role_name = module.backend.ebs_iam_role_name
 }
 
-# module "cdn" {
-#   source            = "./cdn"
-#   env               = var.env
-#   domain            = var.domain
-# }

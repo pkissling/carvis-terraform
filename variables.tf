@@ -18,7 +18,7 @@ variable "website_host_ip" {
 variable "website_cnames" {
   default = {
     dev  = "angry-wilson-eb9e32.netlify.app"
-    live = "condescending-bohr-dc4006.netlify.app"
+    live = "carvis-vue-live.pages.dev"
   }
 }
 
