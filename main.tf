@@ -5,7 +5,7 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket                  = "carvis-state"
+    bucket                  = "carvis-tfstate"
     key                     = "app-state"
     region                  = "eu-west-1"
     shared_credentials_file = "~/.aws/credentials.carvis"
@@ -49,3 +49,9 @@ module "mail" {
   to_mail           = var.to_mail
   ebs_iam_role_name = module.backend.ebs_iam_role_name
 }
+
+# module "cdn" {
+#   source            = "./cdn"
+#   env               = var.env
+#   domain            = var.domain
+# }

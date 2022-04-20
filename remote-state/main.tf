@@ -3,7 +3,7 @@ provider "aws" {
   shared_credentials_file = "~/.aws/credentials.carvis"
 }
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "carvis-state"
+  bucket = "carvis-tfstate"
 
   versioning {
     enabled = true
@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "terraform_state" {
 }
 
 resource "aws_dynamodb_table" "terraform_state_lock" {
-  name           = "carvis-state"
+  name           = "carvis-tfstate"
   read_capacity  = 1
   write_capacity = 1
   hash_key       = "LockID"
