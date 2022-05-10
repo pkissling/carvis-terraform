@@ -28,6 +28,22 @@ resource "aws_dynamodb_table" "requests" {
   }
 }
 
+resource "aws_dynamodb_table" "new-users" {
+  name           = "${var.env}-${var.project_name}-new-users"
+  hash_key       = "userId"
+  read_capacity  = 1
+  write_capacity = 1
+
+  attribute {
+    name = "userId"
+    type = "S"
+  }
+
+  point_in_time_recovery {
+    enabled = true
+  }
+}
+
 resource "aws_iam_policy" "this" {
   name   = "${var.project_name}-${var.env}-access_dynamodb"
   policy = data.aws_iam_policy_document.this.json
@@ -41,6 +57,7 @@ data "aws_iam_policy_document" "this" {
 
     resources = [
       aws_dynamodb_table.cars.arn,
+      aws_dynamodb_table.new-users.arn,
       aws_dynamodb_table.requests.arn
     ]
   }
