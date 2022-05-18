@@ -98,7 +98,8 @@ data "aws_iam_policy_document" "read_write_sqs" {
       "sqs:DeleteMessage",
       "sqs:GetQueueAttributes",
       "sqs:GetQueueUrl",
-      "sqs:ReceiveMessage"
+      "sqs:ReceiveMessage",
+      "sqs:SendMessage"
     ]
 
     resources = [
