@@ -82,17 +82,17 @@ data "aws_iam_policy_document" "sns_publish_user_signup" {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "this" {
+resource "aws_iam_role_policy_attachment" "ebs_read_write_sqs" {
   role       = var.ebs_iam_role_name
-  policy_arn = aws_iam_policy.user_signup_read_sqs.arn
+  policy_arn = aws_iam_policy.read_write_sqs.arn
 }
 
-resource "aws_iam_policy" "user_signup_read_sqs" {
-  name   = "${var.project_name}-${var.env}-sns_read_user_signup"
-  policy = data.aws_iam_policy_document.user_signup_read_sqs.json
+resource "aws_iam_policy" "read_write_sqs" {
+  name   = "${var.project_name}-${var.env}-read_write_sqs"
+  policy = data.aws_iam_policy_document.read_write_sqs.json
 }
 
-data "aws_iam_policy_document" "user_signup_read_sqs" {
+data "aws_iam_policy_document" "read_write_sqs" {
   statement {
     actions = [
       "sqs:DeleteMessage",
@@ -102,7 +102,20 @@ data "aws_iam_policy_document" "user_signup_read_sqs" {
     ]
 
     resources = [
-      aws_sqs_queue.user_signup.arn
+      aws_sqs_queue.user_signup.arn,
+      aws_sqs_queue.carvis_command.arn
     ]
   }
+}
+
+resource "aws_sqs_queue" "carvis_command" {
+  name = "${var.project_name}-${var.env}-carvis_command"
+  redrive_policy = jsonencode({
+    deadLetterTargetArn = aws_sqs_queue.carvis_command_dlq.arn
+    maxReceiveCount     = 5
+  })
+}
+
+resource "aws_sqs_queue" "carvis_command_dlq" {
+  name = "${var.project_name}-${var.env}-carvis_command_dlq"
 }

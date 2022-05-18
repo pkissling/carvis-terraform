@@ -14,7 +14,7 @@ resource "aws_s3_bucket" "images" {
 }
 
 resource "aws_iam_policy" "images" {
-  name   = "${var.project_name}-${var.env}-access_images_s3"
+  name   = "${var.project_name}-${var.env}-read_write_s3"
   policy = data.aws_iam_policy_document.images.json
 }
 

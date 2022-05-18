@@ -45,7 +45,7 @@ resource "aws_dynamodb_table" "new-users" {
 }
 
 resource "aws_iam_policy" "this" {
-  name   = "${var.project_name}-${var.env}-access_dynamodb"
+  name   = "${var.project_name}-${var.env}-read_write_dynamodb"
   policy = data.aws_iam_policy_document.this.json
 }
 
