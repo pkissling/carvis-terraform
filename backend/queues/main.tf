@@ -109,6 +109,51 @@ data "aws_iam_policy_document" "read_write_sqs" {
   }
 }
 
+resource "aws_iam_role_policy_attachment" "ebs_read_sqs_dlq" {
+  role       = var.ebs_iam_role_name
+  policy_arn = aws_iam_policy.read_sqs_dlq.arn
+}
+
+resource "aws_iam_policy" "read_sqs_dlq" {
+  name   = "${var.project_name}-${var.env}-read_sqs_dlq"
+  policy = data.aws_iam_policy_document.read_sqs_dlq.json
+}
+
+data "aws_iam_policy_document" "read_sqs_dlq" {
+  statement {
+    actions = [
+      "sqs:GetQueueAttributes",
+      "sqs:GetQueueUrl",
+      "sqs:ReceiveMessage",
+    ]
+
+    resources = [
+      aws_sqs_queue.user_signup_dlq.arn,
+      aws_sqs_queue.carvis_command_dlq.arn
+    ]
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "ebs_list_sqs" {
+  role       = var.ebs_iam_role_name
+  policy_arn = aws_iam_policy.list_sqs.arn
+}
+
+resource "aws_iam_policy" "list_sqs" {
+  name   = "${var.project_name}-${var.env}-list_sqs"
+  policy = data.aws_iam_policy_document.list_sqs.json
+}
+
+data "aws_iam_policy_document" "list_sqs" {
+  statement {
+    actions = [
+      "sqs:ListQueues"
+    ]
+
+    resources = ["*"]
+  }
+}
+
 resource "aws_sqs_queue" "carvis_command" {
   name = "${var.project_name}-${var.env}-carvis_command"
   redrive_policy = jsonencode({
