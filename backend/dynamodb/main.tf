@@ -44,6 +44,22 @@ resource "aws_dynamodb_table" "new-users" {
   }
 }
 
+resource "aws_dynamodb_table" "shareable-links" {
+  name           = "${var.env}-${var.project_name}-shareable-links"
+  hash_key       = "shareableLinkReference"
+  read_capacity  = 1
+  write_capacity = 1
+
+  attribute {
+    name = "shareableLinkReference"
+    type = "S"
+  }
+
+  point_in_time_recovery {
+    enabled = true
+  }
+}
+
 resource "aws_iam_policy" "this" {
   name   = "${var.project_name}-${var.env}-read_write_dynamodb"
   policy = data.aws_iam_policy_document.this.json
@@ -58,7 +74,8 @@ data "aws_iam_policy_document" "this" {
     resources = [
       aws_dynamodb_table.cars.arn,
       aws_dynamodb_table.new-users.arn,
-      aws_dynamodb_table.requests.arn
+      aws_dynamodb_table.requests.arn,
+      aws_dynamodb_table.shareable-links.arn
     ]
   }
 }
