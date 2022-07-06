@@ -104,7 +104,8 @@ data "aws_iam_policy_document" "read_write_sqs" {
 
     resources = [
       aws_sqs_queue.user_signup.arn,
-      aws_sqs_queue.carvis_command.arn
+      aws_sqs_queue.carvis_command.arn,
+      aws_sqs_queue.carvis_event.arn
     ]
   }
 }
@@ -129,7 +130,8 @@ data "aws_iam_policy_document" "read_sqs_dlq" {
 
     resources = [
       aws_sqs_queue.user_signup_dlq.arn,
-      aws_sqs_queue.carvis_command_dlq.arn
+      aws_sqs_queue.carvis_command_dlq.arn,
+      aws_sqs_queue.carvis_event_dlq.arn
     ]
   }
 }
@@ -165,3 +167,16 @@ resource "aws_sqs_queue" "carvis_command" {
 resource "aws_sqs_queue" "carvis_command_dlq" {
   name = "${var.project_name}-${var.env}-carvis_command_dlq"
 }
+
+resource "aws_sqs_queue" "carvis_event" {
+  name = "${var.project_name}-${var.env}-carvis_event"
+  redrive_policy = jsonencode({
+    deadLetterTargetArn = aws_sqs_queue.carvis_event_dlq.arn
+    maxReceiveCount     = 5
+  })
+}
+
+resource "aws_sqs_queue" "carvis_event_dlq" {
+  name = "${var.project_name}-${var.env}-carvis_event_dlq"
+}
+
