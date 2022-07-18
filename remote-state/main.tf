@@ -1,12 +1,16 @@
 provider "aws" {
-  region                  = "eu-west-1"
-  shared_credentials_file = "~/.aws/credentials.carvis"
+  region                   = "eu-west-1"
+  shared_credentials_files = ["~/.aws/credentials.carvis"]
 }
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "carvis-tfstate"
+}
 
-  versioning {
-    enabled = true
+resource "aws_s3_bucket_versioning" "terraform_state" {
+  bucket = aws_s3_bucket.terraform_state.bucket
+
+  versioning_configuration {
+    status = "Enabled"
   }
 
   lifecycle {
