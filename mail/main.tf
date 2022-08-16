@@ -81,7 +81,7 @@ resource "aws_lambda_function" "mail_forwarder" {
   function_name = "${var.project_name}-${var.env}_mail-forwarder"
   role          = aws_iam_role.mail_forwarder[0].arn
   handler       = "mail-forwarder.handler"
-  runtime       = "nodejs12.x"
+  runtime       = "nodejs14.x"
 
   filename         = "./target/mail-forwarder.zip"
   source_code_hash = data.archive_file.mail_forwarder_zip.output_base64sha256
